@@ -1,0 +1,494 @@
+Parameters:
+  OriginDomainName:
+    Type: String
+    Description: Enter the domain name of your origin (e.g. my-origin123.example.com)
+Resources:
+  staticCachePolicyWithCompression:
+    Type: AWS::CloudFront::CachePolicy
+    Properties: 
+      CachePolicyConfig: 
+        Comment: 'Cache policy for static content with gzip/br compression'
+        DefaultTTL: 259200
+        MaxTTL: 31536000
+        MinTTL: 0
+        Name: !Join ['-', [!Select [2, !Split ['/', !Ref AWS::StackId]], 'staticCachePolicyWithCompression']]
+        ParametersInCacheKeyAndForwardedToOrigin: 
+          CookiesConfig: 
+            CookieBehavior: none
+          EnableAcceptEncodingBrotli: True
+          EnableAcceptEncodingGzip: True
+          HeadersConfig: 
+            HeaderBehavior: none
+          QueryStringsConfig: 
+            QueryStringBehavior: none
+  staticCachePolicyWithoutCompression:
+    Type: AWS::CloudFront::CachePolicy
+    Properties: 
+      CachePolicyConfig: 
+        Comment: 'Cache policy for static content with no compression'
+        DefaultTTL: 259200
+        MaxTTL: 31536000
+        MinTTL: 0
+        Name: !Join ['-', [!Select [2, !Split ['/', !Ref AWS::StackId]], 'staticCachePolicyWithoutCompression']]
+        ParametersInCacheKeyAndForwardedToOrigin: 
+          CookiesConfig: 
+            CookieBehavior: none
+          EnableAcceptEncodingBrotli: False
+          EnableAcceptEncodingGzip: False
+          HeadersConfig: 
+            HeaderBehavior: none
+          QueryStringsConfig:
+            QueryStringBehavior: none
+  cloudfrontConfig:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: 'Click and go, accelerated and secure website'
+        DefaultCacheBehavior:
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+          OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac
+          ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+          AllowedMethods: 
+            - GET
+            - HEAD
+            - OPTIONS
+            - PUT
+            - POST
+            - DELETE
+            - PATCH
+          TargetOriginId: customOrigin
+          ViewerProtocolPolicy: redirect-to-https
+        CacheBehaviors:
+          - PathPattern: '*.jpg'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.jpeg'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.png'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.ico'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.gif'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.bmp'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.webp'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.svg'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.tiff'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.woff'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.woff2'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.mp3'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.mp4'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.mov'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.aif'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.wav'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.zip'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.pdf'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.doc'
+            CachePolicyId: !Ref staticCachePolicyWithoutCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+          - PathPattern: '*.js'
+            CachePolicyId: !Ref staticCachePolicyWithCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: True
+          - PathPattern: '*.css'
+            CachePolicyId: !Ref staticCachePolicyWithCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: True
+          - PathPattern: '*.txt'
+            CachePolicyId: !Ref staticCachePolicyWithCompression
+            ResponseHeadersPolicyId: 67f7725c-6f97-4210-82d7-5512b31e9d03
+            AllowedMethods: 
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - POST
+              - DELETE
+              - PATCH
+            CachedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: customOrigin
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: True
+        Enabled: true
+        HttpVersion: http2and3
+        IPV6Enabled: true
+        Origins:
+          - DomainName:
+              Ref: OriginDomainName
+            Id: customOrigin
+            CustomOriginConfig: 
+              HTTPSPort: 443
+              OriginKeepaliveTimeout: 30
+              OriginProtocolPolicy: https-only
+        WebACLId:
+          Fn::GetAtt:
+            - wafConfig
+            - Arn
+  wafConfig:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      DefaultAction:
+        Allow: {}
+      Scope: CLOUDFRONT
+      VisibilityConfig:
+        CloudWatchMetricsEnabled: True
+        MetricName: webACL
+        SampledRequestsEnabled: True
+      Rules:
+        - Name: AWS-AWSManagedRulesCommonRuleSet
+          OverrideAction:
+            None: {}
+          Priority: 1
+          Statement:
+            ManagedRuleGroupStatement:
+              Name: AWSManagedRulesCommonRuleSet
+              VendorName: AWS
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: True
+            MetricName: AWSManagedRulesCommonRuleSet
+            SampledRequestsEnabled: True
+        - Name: AWS-AWSManagedRulesKnownBadInputsRuleSet
+          OverrideAction:
+            None: {}
+          Priority: 2
+          Statement:
+            ManagedRuleGroupStatement:
+              Name: AWSManagedRulesKnownBadInputsRuleSet
+              VendorName: AWS
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: True
+            MetricName: AWSManagedRulesKnownBadInputsRuleSet
+            SampledRequestsEnabled: True
+        - Name: AWS-AWSManagedRulesAmazonIpReputationList
+          OverrideAction:
+            None: {}
+          Priority: 3
+          Statement:
+            ManagedRuleGroupStatement:
+              Name: AWSManagedRulesAmazonIpReputationList
+              VendorName: AWS
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: True
+            MetricName: AWSManagedRulesAmazonIpReputationList
+            SampledRequestsEnabled: True
+        - Name: Custom-BlanketRateLimiting
+          Action:
+            Block: {}
+          Priority: 4
+          Statement:
+            RateBasedStatement:
+              AggregateKeyType: IP
+              Limit: 10000
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: True
+            MetricName: BlanketRateLimiting
+            SampledRequestsEnabled: True
+Outputs:
+  CloudFrontDomainName:
+    Description: The domain name generated by CloudFront
+    Value: !GetAtt cloudfrontConfig.DomainName

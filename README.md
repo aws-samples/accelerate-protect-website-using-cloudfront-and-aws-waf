@@ -1,11 +1,9 @@
-## My Project
+## Boost the performance and security of your dynamic website in few clicks using AWS edge services
 
-TODO: Fill this README out!
+This blog is written for developers who are looking to bring their website online if it’s under DDoS attack, or looking for a quick web performance win, or simply looking to get started with setting up a Content Delivery Network (CDN) and a Web Application Firewall (WAF) for their website.
 
-Be sure to:
+We are assuming that it is a dynamic website, such as a Server Side Rendered frontend, with some static content, that is served from regional servers, such as an Elastic Load balancer, or servers on premises. 
 
-* Change the title in this README
-* Edit your repository description on GitHub
 
 ## Security
 

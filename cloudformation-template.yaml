@@ -44,6 +44,7 @@ Parameters:
 Conditions:
   AutomaticTLSCertGenrationEnabled: !Equals [ !Ref isApplicationDomainNameR53Hosted, yes ]
 Resources:
+# Only generate a TLS certificate using ACM if needed
   generatedTlsCertificate: 
     Type: AWS::CertificateManager::Certificate
     Condition : AutomaticTLSCertGenrationEnabled
@@ -53,6 +54,7 @@ Resources:
         - DomainName: !Ref ApplicationDomainName
           HostedZoneId: !Ref Route53HostedZoneId
       ValidationMethod: DNS 
+# Cache policy for static text based files
   staticCachePolicyWithCompression:
     Type: AWS::CloudFront::CachePolicy
     Properties: 
@@ -71,6 +73,7 @@ Resources:
             HeaderBehavior: none
           QueryStringsConfig: 
             QueryStringBehavior: none
+# Cache policy for static onn compressible files
   staticCachePolicyWithoutCompression:
     Type: AWS::CloudFront::CachePolicy
     Properties: 
@@ -89,6 +92,7 @@ Resources:
             HeaderBehavior: none
           QueryStringsConfig:
             QueryStringBehavior: none
+# CloudFront distribution
   cloudfrontConfig:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -488,6 +492,7 @@ Resources:
           Fn::GetAtt:
             - wafConfig
             - Arn
+# WAF WebACL
   wafConfig:
     Type: AWS::WAFv2::WebACL
     Properties:
@@ -550,7 +555,7 @@ Resources:
   #          CloudWatchMetricsEnabled: True
   #          MetricName: RateLimitSuspiciousIPs
   #          SampledRequestsEnabled: True
-  # https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/1695
+  # Uncomment this block when this issue is solved https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/1695
         - Name: Custom-BlanketRateLimiting
           Action:
             Block: {}

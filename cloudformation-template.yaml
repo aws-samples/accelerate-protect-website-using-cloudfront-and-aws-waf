@@ -540,22 +540,21 @@ Resources:
             CloudWatchMetricsEnabled: True
             MetricName: AWSManagedRulesAmazonIpReputationList
             SampledRequestsEnabled: True
-  #      - Name: Custom-RateLimitSuspiciousIPs
-  #        Action:
-  #          Block: {}
-  #        Priority: 4
-  #        Statement:
-  #          RateBasedStatement:
-  #            AggregateKeyType: CUSTOM_KEYS
-  #            CustomKeys:
-  #              - LabelNamespace:
-  #                  Namespace: 'awswaf:managed:aws:amazon-ip-list:'
-  #            Limit: 500
-  #        VisibilityConfig:
-  #          CloudWatchMetricsEnabled: True
-  #          MetricName: RateLimitSuspiciousIPs
-  #          SampledRequestsEnabled: True
-  # Uncomment this block when this issue is solved https://github.com/aws-cloudformation/cloudformation-coverage-roadmap/issues/1695
+        - Name: Custom-RateLimitSuspiciousIPs
+          Action:
+            Block: {}
+          Priority: 4
+          Statement:
+            RateBasedStatement:
+              AggregateKeyType: CUSTOM_KEYS
+              CustomKeys:
+                - LabelNamespace:
+                    Namespace: 'awswaf:managed:aws:amazon-ip-list:'
+              Limit: 500
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: True
+            MetricName: RateLimitSuspiciousIPs
+            SampledRequestsEnabled: True
         - Name: Custom-BlanketRateLimiting
           Action:
             Block: {}

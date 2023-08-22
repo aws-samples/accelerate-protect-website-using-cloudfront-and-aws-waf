@@ -1,9 +1,10 @@
-## Boost the performance and security of your dynamic website in few clicks using AWS edge services
+## Boost the performance and security of your dynamic website in few steps using AWS edge services
 
-This blog is written for developers who are looking to bring their website online if it’s under DDoS attack, or looking for a quick web performance win, or simply looking to get started with setting up a Content Delivery Network (CDN) and a Web Application Firewall (WAF) for their website.
+In this repo, we provide you with an AWS CloudFormation template that allows you to deploy within few clicks, an Amazon CloudFront distribution as a reverse proxy to your origin servers, protected by an AWS WAF WebACL. CloudFront will help you accelerate your websites thanks to techniques such as caching if it applies, AWS Global network and advanced TCP optimizations. CloudFront natively protect your application against infrastructure DDoS attacks, and integrates with AWS WAF, to allow you to write rules for managing threats at application layer. 
 
-We are assuming that it is a dynamic website, such as a Server Side Rendered frontend, with some static content, that is served from regional servers, such as an Elastic Load balancer, or servers on premises. 
+![image](diagram.png)
 
+Note that the provided solution is scoped to dynamic websites, such as a Server Side Rendered frontends, with some static content, that is served from origin servers, such as an Elastic Load balancer, or servers on premises. 
 
 ## Security
 

@@ -530,7 +530,7 @@ Resources:
             SampledRequestsEnabled: True
         - Name: AWS-AWSManagedRulesAmazonIpReputationList
           OverrideAction:
-            Count: {}
+            None: {}
           Priority: 3
           Statement:
             ManagedRuleGroupStatement:
@@ -549,7 +549,7 @@ Resources:
               AggregateKeyType: CUSTOM_KEYS
               CustomKeys:
                 - LabelNamespace:
-                    Namespace: 'awswaf:managed:aws:amazon-ip-list:'
+                    Namespace: 'awswaf:managed:aws:amazon-ip-list:AWSManagedIPDDoSList'
               Limit: 500
           VisibilityConfig:
             CloudWatchMetricsEnabled: True
